@@ -8,7 +8,7 @@ const messagesRouter = require('./routes/messagesRouter');
 const mongoose = require('mongoose');
 
 const corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'https://socket-angular-chat-client.vercel.app',
   credentials: true,
   exposedHeaders: 'authorization-token',
 };
@@ -33,7 +33,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socketIO(server, {
   cors: {
-    origin: 'http://localhost:4200',
+    origin: 'https://socket-angular-chat-client.vercel.app',
     methods: ['GET', 'POST']
   }
 });
