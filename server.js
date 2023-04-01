@@ -1,14 +1,13 @@
 require('dotenv').config();
 const cors = require('cors');
-const express = require('express');
 const socketIO = require('socket.io');
+const express = require('express');
 const app = express();
 const userRouter = require('./routes/userRouter');
-const messagesRouter = require('./routes/messagesRouter');
 const mongoose = require('mongoose');
 
 const corsOptions = {
-  origin: 'https://socket-angular-chat-client.vercel.app',
+  origin: process.env.ORIGIN,
   credentials: true,
   exposedHeaders: 'authorization-token',
 };
@@ -22,10 +21,9 @@ app.use(cors(corsOptions));
 
 app.use('/api/auth', express.json() ,userRouter);
 
-app.use('/api/messages', express.json() ,messagesRouter);
-
 const server = app.listen(process.env.PORT, () => {
   console.log('server is running on port ', process.env.PORT);
+  console.log('origin: ', process.env.ORIGIN)
 });
 
 
@@ -33,7 +31,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socketIO(server, {
   cors: {
-    origin: 'https://socket-angular-chat-client.vercel.app',
+    origin: process.env.ORIGIN,
     methods: ['GET', 'POST']
   }
 });
